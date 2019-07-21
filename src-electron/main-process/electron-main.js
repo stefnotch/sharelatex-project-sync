@@ -99,6 +99,10 @@ ipcMain.on("open-new-window", (event, url) => {
 
   win.webContents.on("did-finish-load", () => {
     interval = setInterval(async () => {
+      if (win.webContents.getURL().includes("login")) {
+        return;
+      }
+
       win.webContents.session.cookies
         .get({
           domain: new URL(url).hostname,
