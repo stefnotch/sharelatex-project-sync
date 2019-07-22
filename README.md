@@ -1,22 +1,41 @@
-# sharelatex-project-sync (sharelatex-project-sync)
+# ShareLaTeX Project Sync
 
-Syncs ShareLaTeX project with a folder on your hard-drive
+Syncs ShareLaTeX project with a folder on your hard-drive.
 
-## Install the dependencies
+
+
+![Screenshot](Screenshot.png)
+
+
+
+## Features
+
+- ShareLaTeX project downloading
+- File caching
+
+
+
+## Limitations
+
+- **Doesn't upload files yet**, so it's just a downloader 
+- Doesn't work with [Overleaf](https://github.com/stefnotch/sharelatex-project-sync/issues/4)
+
+
+
+## Developer Instructions
+
+### Install the dependencies
 ```bash
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Start the app in development mode 
 ```bash
-quasar dev
+npm run dev
 ```
 
 
 ### Build the app for production
 ```bash
-quasar build
+npm run build
 ```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
