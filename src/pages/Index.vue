@@ -72,7 +72,7 @@ export default {
     url(newValue) {
       localStorage["url"] = newValue;
     },
-    folderPath(newValue) {
+    outputFolderPath(newValue) {
       localStorage["folderPath"] = newValue;
     },
     fileHashes(newValue) {
