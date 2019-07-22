@@ -57,6 +57,8 @@ export default {
       csrfToken: "",
       fileHashes: {},
       isSyncing: false,
+      downloadCount: 0,
+      cachedCount: 0,
       error: "",
       /** @type {WebSocket|null} */
       websocket: null,
@@ -268,6 +270,8 @@ export default {
     async sync() {
       try {
         this.error = "";
+        this.downloadCount = 0;
+        this.cachedCount = 0;
         this.invalidateOutdatedHashes();
         let project = await this.joinProject();
         console.log(project);
@@ -288,6 +292,19 @@ export default {
         this.websocketPromises = [];
         this.websocketResponseIndex = 1;
         this.websocketResponsePromises = [];
+
+        this.$q.notify({
+          message: `Synced ${this.downloadCount + this.cachedCount} files, ${
+            this.cachedCount
+          } were cached.`,
+          position: "bottom",
+          actions: [
+            {
+              label: "Ok",
+              handler: () => {}
+            }
+          ]
+        });
       }
     },
     /**
@@ -329,6 +346,7 @@ export default {
         this.fileHashes[filePath].remoteHash == hash
       ) {
         console.log(`${filePath} has already been synced, skipping it`);
+        this.cachedCount++;
         return;
       } else {
         const response = await fetch(
@@ -357,6 +375,7 @@ export default {
             reject(err);
           });
         });
+        this.downloadCount++;
 
         this.$set(this.fileHashes, filePath, {
           remoteHash: hash,
@@ -398,6 +417,8 @@ export default {
           reject(err);
         });
       });
+
+      this.downloadCount++;
 
       this.$set(this.fileHashes, docPath, {
         remoteHash: hash,
